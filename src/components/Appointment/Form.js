@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
 import "./styles.scss";
 
 export default function Form(props) {
-  const {} = props;
+  const { interviewers, onSave, onCancel } = props;
+
+  const [student, setStudent] = useState(props.student || "");
+  const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
   return (
     <main className="appointment__card appointment__card--create">

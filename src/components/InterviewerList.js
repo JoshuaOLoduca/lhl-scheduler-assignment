@@ -9,10 +9,9 @@ export default function InterViewerList(props) {
   const intervListItems = interviewers.map((elm) => (
     <InterViewerListItem
       name={elm.name}
-      id={elm.id}
       avatar={elm.avatar}
       selected={interviewer === elm.id}
-      setInterviewer={setInterviewer}
+      setInterviewer={() => setInterviewer(elm.id)}
     />
   ));
 

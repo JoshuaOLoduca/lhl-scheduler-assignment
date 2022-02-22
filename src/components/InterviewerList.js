@@ -4,14 +4,14 @@ import InterViewerListItem from "./InterviewerListItem";
 import "components/InterviewerList.scss";
 
 export default function InterViewerList(props) {
-  const { interviewers, interviewer, setInterviewer } = props;
+  const { interviewers, value, onChange } = props;
 
   const intervListItems = interviewers.map((elm) => (
     <InterViewerListItem
       name={elm.name}
       avatar={elm.avatar}
-      selected={interviewer === elm.id}
-      setInterviewer={() => setInterviewer(elm.id)}
+      selected={value === elm.id}
+      setInterviewer={() => onChange(elm.id)}
     />
   ));
 

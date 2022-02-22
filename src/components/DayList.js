@@ -4,15 +4,15 @@ import DayListItem from "./DayListItem";
 // import "components/DayList.scss";
 
 export default function DayList(props) {
-  const { days, day, setDay } = props;
+  const { days, value, onChange } = props;
 
   const constructedDays = days.map((curr) => (
     <DayListItem
       key={curr.id}
       name={curr.name}
       spots={curr.spots}
-      selected={curr.name === day}
-      setDay={setDay}
+      selected={curr.name === value}
+      setDay={onChange}
     ></DayListItem>
   ));
 

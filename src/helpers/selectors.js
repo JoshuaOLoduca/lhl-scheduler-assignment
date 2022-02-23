@@ -12,3 +12,14 @@ export function getAppointmentsForDay(state, day) {
 
   return appointmentsForDay;
 }
+export function getInterview(state, appointment) {
+  let interview = null;
+
+  if (appointment && appointment.interviewer) {
+    interview = {
+      student: appointment.student,
+      interviewer: state.interviewers[appointment.interviewer],
+    };
+  }
+  return interview;
+}

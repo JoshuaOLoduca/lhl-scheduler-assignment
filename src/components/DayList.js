@@ -1,8 +1,6 @@
 import React from "react";
 import DayListItem from "./DayListItem";
 
-// import "components/DayList.scss";
-
 export default function DayList(props) {
   const { days, value, onChange } = props;
 
@@ -15,10 +13,6 @@ export default function DayList(props) {
       setDay={onChange}
     ></DayListItem>
   ));
-
-  console.log(constructedDays, days);
-
-  // const classes = classNames();
 
   return <ul>{constructedDays}</ul>;
 }

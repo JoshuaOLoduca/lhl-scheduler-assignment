@@ -20,10 +20,9 @@ export function getInterviewersForDay(state, day) {
 
   for (const item of state.days) {
     if (item.name === day) {
-      item.appointments.forEach((id) => {
-        if (state.appointments[id].interview)
+      item.interviewers.forEach((id) => {
           InterviewersForDay.push(
-            state.interviewers[state.appointments[id].interview.interviewer]
+            state.interviewers[id]
           );
       });
 

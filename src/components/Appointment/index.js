@@ -10,7 +10,6 @@ import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
 import "./styles.scss";
-import axios from "axios";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";

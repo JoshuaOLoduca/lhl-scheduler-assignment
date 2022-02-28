@@ -17,6 +17,7 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETE = "DELETE";
 const DELETING = "DELETING";
+const EDIT = "EDIT";
 
 export default function Appointment(props) {
   const { time, interview, bookInterview, id, interviewers} = props;
@@ -44,7 +45,6 @@ export default function Appointment(props) {
     axios.delete(`/api/appointments/${appointmentId}`)
       .then(() => transition(EMPTY))
       .catch(e => console.log(e))
-
   }
 
   return (
@@ -56,7 +56,8 @@ export default function Appointment(props) {
         <Show
           student={ interview.student }
           interviewer={ interview.interviewer }
-          onDelete={ () => transition(DELETE) } />
+          onDelete={ () => transition(DELETE) }
+          onEdit={() => transition(EDIT)}/>
       )}
 
       { mode === CREATE && <Form
@@ -72,6 +73,12 @@ export default function Appointment(props) {
         message={ `Delete Interview for ${interview.student}?` }
         onConfirm={ () => deleteInterview(id) }
         onCancel={ back } /> }
+      
+      { mode === EDIT && <Form
+        student={ interview.student }
+        interviewers={ [...interviewers] }
+        interviewer={ interview.interviewer.id }
+        onSave={ save }/> }
     </article>
   );
 }

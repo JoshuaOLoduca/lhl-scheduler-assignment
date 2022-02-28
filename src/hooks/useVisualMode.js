@@ -10,9 +10,10 @@ export default function useVisualMode(initial) {
   }
 
   function back() {
+    console.log(history);
     if (history.length === 0) return;
     setMode(history.pop());
-    setHistory((prev) => prev.slice(-1));
+    setHistory((prev) => [...prev]);
   }
 
   return { mode, transition, back };

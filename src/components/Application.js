@@ -40,7 +40,6 @@ export default function Application(props) {
 
         return;
       })
-    .catch(e => console.log(e))
   }
 
   const interviewersForDay = getInterviewersForDay(state, state.day)

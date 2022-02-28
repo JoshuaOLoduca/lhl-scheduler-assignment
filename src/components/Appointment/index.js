@@ -5,6 +5,7 @@ import Empty from "./Empty";
 import Form from "./Form.js";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 
 import useVisualMode from "hooks/useVisualMode";
 
@@ -18,6 +19,8 @@ const SAVING = "SAVING";
 const DELETE = "DELETE";
 const DELETING = "DELETING";
 const EDIT = "EDIT";
+const ERROR_SAVING = "ERROR_SAVING";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
   const { time, interview, bookInterview, id, interviewers} = props;
@@ -36,6 +39,7 @@ export default function Appointment(props) {
 
     bookInterview(id, newInterview)
       .then(() => transition(SHOW))
+      .catch(e => transition(ERROR_SAVING, true))
   }
 
 
@@ -44,7 +48,7 @@ export default function Appointment(props) {
 
     axios.delete(`/api/appointments/${appointmentId}`)
       .then(() => transition(EMPTY))
-      .catch(e => console.log(e))
+      .catch(e => transition(ERROR_DELETE, true))
   }
 
   return (
@@ -78,7 +82,16 @@ export default function Appointment(props) {
         student={ interview.student }
         interviewers={ [...interviewers] }
         interviewer={ interview.interviewer.id }
+        onCancel={ back }
         onSave={ save }/> }
+      
+      { mode === ERROR_SAVING && <Error
+        message={ 'Couldnt save details' }
+        onClose={ back }/> }
+      
+      { mode === ERROR_DELETE && <Error
+        message={ 'Couldnt delete appointment' }
+        onClose={ back }/> }
     </article>
   );
 }

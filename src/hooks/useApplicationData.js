@@ -34,12 +34,28 @@ export default function useApplicationData() {
           }
         });
 
+        updateSpots(-1)
+
         return;
       })
   }
 
   function deleteInterview(appointmentId) {
     return axios.delete(`/api/appointments/${appointmentId}`)
+      .then(data => {
+        updateSpots(+1)
+        return;
+      })
+  }
+
+  function updateSpots(num) {
+    setState(prev => {
+      const newState = {...prev}
+      const dayIndex = prev.days.findIndex(day => day.name === state.day)
+
+      newState.days[dayIndex].spots += num;
+      return newState;
+    })
   }
 
   const setDay = (day) => setState({ ...state, day });

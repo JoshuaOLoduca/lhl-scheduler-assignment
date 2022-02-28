@@ -1,18 +1,18 @@
 import React from "react";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from "helpers/selectors";
 import useApplicationData from "hooks/useApplicationData";
 
 import "components/Application.scss";
 
 export default function Application(props) {
-  const {
-    state,
-    setDay,
-    bookInterview,
-    deleteInterview
-  } = useApplicationData();
+  const { state, setDay, bookInterview, deleteInterview } =
+    useApplicationData();
 
   const interviewersForDay = getInterviewersForDay(state, state.day);
 
@@ -23,12 +23,12 @@ export default function Application(props) {
 
     return (
       <Appointment
-        { ...appointment }
-        key={ appointment.id }
-        interview={ interview }
-        bookInterview={ bookInterview }
-        deleteInterview={ deleteInterview }
-        interviewers={ interviewersForDay }
+        {...appointment}
+        key={appointment.id}
+        interview={interview}
+        bookInterview={bookInterview}
+        deleteInterview={deleteInterview}
+        interviewers={interviewersForDay}
       />
     );
   });

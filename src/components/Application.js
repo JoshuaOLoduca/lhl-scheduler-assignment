@@ -3,46 +3,19 @@ import axios from "axios";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import useApplicationData from "hooks/useApplicationData";
 
 import "components/Application.scss";
 
 export default function Application(props) {
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    // you may put the line below, but will have to remove/comment hardcoded appointments variable
-    appointments: {},
-    interviewers: {},
-  });
+    const {
+    state,
+    setDay,
+    bookInterview,
+    deleteInterview
+  } = useApplicationData();
 
-  function bookInterview(id, interview) {
-    console.log(id, interview);
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    return axios.put(`/api/appointments/${id}`, {interview})
-      .then(result => {
-
-        setState(prev => {
-          return {
-            ...prev,
-            appointments
-          }
-        });
-
-        return;
-      })
-  }
-
-  const interviewersForDay = getInterviewersForDay(state, state.day)
+  const interviewersForDay = getInterviewersForDay(state, state.day);
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
@@ -55,29 +28,11 @@ export default function Application(props) {
         key={ appointment.id }
         interview={ interview }
         bookInterview={ bookInterview }
+        deleteInterview={ deleteInterview }
         interviewers={ interviewersForDay }
       />
     );
   });
-
-  const setDay = (day) => setState({ ...state, day });
-
-  useEffect(() => {
-    Promise.all([
-      axios.get("/api/days"),
-      axios.get("/api/appointments"),
-      axios.get("/api/interviewers"),
-    ]).then((all) => {
-      const [days, appointments, interviewers] = all;
-
-      setState((prev) => ({
-        ...prev,
-        days: days.data,
-        appointments: appointments.data,
-        interviewers: interviewers.data,
-      }));
-    });
-  }, []);
 
   return (
     <main className="layout">

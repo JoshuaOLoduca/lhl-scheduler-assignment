@@ -23,7 +23,7 @@ const ERROR_SAVING = "ERROR_SAVING";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
-  const { time, interview, bookInterview, id, interviewers} = props;
+  const { time, interview, bookInterview, deleteInterview, id, interviewers} = props;
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -43,10 +43,10 @@ export default function Appointment(props) {
   }
 
 
-  function deleteInterview(appointmentId) {
+  function cancelInterview(appointmentId) {
     transition(DELETING);
 
-    axios.delete(`/api/appointments/${appointmentId}`)
+    deleteInterview(appointmentId)
       .then(() => transition(EMPTY))
       .catch(e => transition(ERROR_DELETE, true))
   }
@@ -75,7 +75,7 @@ export default function Appointment(props) {
       
       { mode === DELETE && <Confirm
         message={ `Delete Interview for ${interview.student}?` }
-        onConfirm={ () => deleteInterview(id) }
+        onConfirm={ () => cancelInterview(id) }
         onCancel={ back } /> }
       
       { mode === EDIT && <Form

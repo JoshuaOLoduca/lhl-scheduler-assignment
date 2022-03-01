@@ -63,14 +63,6 @@ export default function useApplicationData() {
     });
   }
 
-  function updateSpots(num) {
-    const newState = { ...state };
-    const dayIndex = newState.days.findIndex((day) => day.name === state.day);
-
-    newState.days[dayIndex].spots += num;
-    dispatch({ type: SET_APPLICATION_DATA, value: newState });
-  }
-
   const setDay = (day) => dispatch({ type: SET_DAY, value: day });
 
   useEffect(() => {
@@ -95,26 +87,31 @@ export default function useApplicationData() {
   useEffect(() => {
     const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
-    webSocket.onopen = function (event) {
-      webSocket.send("ping");
-    };
+    webSocket.onopen = function (event) {};
 
     webSocket.onmessage = function (event) {
       var msg = JSON.parse(event.data);
       if (msg.type !== SET_INTERVIEW) return;
       const { id, interview } = msg;
 
-      // if (interview) updateSpots(+1);
-      // else updateSpots(-1);
-      console.log(state);
+      if (interview) updateSpots(-1);
+      else updateSpots(+1);
 
       dispatch({ type: SET_INTERVIEW, value: { id, interview } });
     };
 
+    function updateSpots(num) {
+      const newState = { ...state };
+      const dayIndex = newState.days.findIndex((day) => day.name === state.day);
+
+      newState.days[dayIndex].spots += num;
+      dispatch({ type: SET_APPLICATION_DATA, value: newState });
+    }
+
     return () => {
       webSocket.close();
     };
-  }, []);
+  }, [state]);
 
   return { state, bookInterview, deleteInterview, setDay };
 }

@@ -94,15 +94,20 @@ export default function useApplicationData() {
       if (msg.type !== SET_INTERVIEW) return;
       const { id, interview } = msg;
 
-      if (interview) updateSpots(-1);
-      else updateSpots(+1);
+      console.log(msg);
+
+      if (interview) updateSpots(id, -1);
+      else updateSpots(id, +1);
 
       dispatch({ type: SET_INTERVIEW, value: { id, interview } });
     };
 
-    function updateSpots(num) {
+    function updateSpots(interviewId, num) {
       const newState = { ...state };
-      const dayIndex = newState.days.findIndex((day) => day.name === state.day);
+      console.log(newState);
+      const dayIndex = newState.days.findIndex((day) =>
+        day.appointments.includes(interviewId)
+      );
 
       newState.days[dayIndex].spots += num;
       dispatch({ type: SET_APPLICATION_DATA, value: newState });

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import InterViewerListItem from "./InterviewerListItem";
 
 import "components/InterviewerList.scss";
@@ -23,3 +24,8 @@ export default function InterViewerList(props) {
     </section>
   );
 }
+
+// Prop Validation
+InterViewerList.propTypes = {
+  interviewers: PropTypes.array.isRequired,
+};

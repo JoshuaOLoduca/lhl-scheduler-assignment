@@ -7,7 +7,7 @@ export default function useApplicationData() {
   const SET_INTERVIEW = "SET_INTERVIEW";
 
   function reducer(state, action) {
-    const newState = { ...state };
+    let newState = { ...state };
     switch (action.type) {
       case SET_DAY:
         newState.day = action.value;
@@ -18,19 +18,37 @@ export default function useApplicationData() {
         const { id, interview } = action.value;
         const appointment = {
           ...state.appointments[id],
-          interview: { ...interview },
+          interview: interview ? { ...interview } : null,
         };
-
         const appointments = {
           ...state.appointments,
           [id]: appointment,
         };
-        return { ...newState, appointments };
+
+        newState = { ...newState, appointments };
+        updateSpots(newState, id);
+
+        return newState;
       }
       default:
         throw new Error(
           `Tried to reduce with unsupported action type: ${action.type}`
         );
+    }
+
+    function updateSpots(myState, interviewId) {
+      const dayIndex = myState.days.findIndex((day) =>
+        day.appointments.includes(interviewId)
+      );
+
+      myState.days[dayIndex].spots = myState.days[dayIndex].appointments.reduce(
+        (prev, cur) => {
+          const interview = myState.appointments[cur].interview;
+          if (!interview) return prev + 1;
+          return prev;
+        },
+        0
+      );
     }
   }
 
@@ -87,33 +105,18 @@ export default function useApplicationData() {
   useEffect(() => {
     const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
-    webSocket.onopen = function (event) {};
-
     webSocket.onmessage = function (event) {
       var msg = JSON.parse(event.data);
       if (msg.type !== SET_INTERVIEW) return;
+
       const { id, interview } = msg;
-
-      if (interview) updateSpots(id, -1);
-      else updateSpots(id, +1);
-
       dispatch({ type: SET_INTERVIEW, value: { id, interview } });
     };
-
-    function updateSpots(interviewId, num) {
-      const newState = { ...state };
-      const dayIndex = newState.days.findIndex((day) =>
-        day.appointments.includes(interviewId)
-      );
-
-      newState.days[dayIndex].spots += num;
-      dispatch({ type: SET_APPLICATION_DATA, value: newState });
-    }
 
     return () => {
       webSocket.close();
     };
-  }, [state]);
+  }, []);
 
   return { state, bookInterview, deleteInterview, setDay };
 }

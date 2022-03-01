@@ -15,8 +15,17 @@ export default function useApplicationData() {
       case SET_APPLICATION_DATA:
         return { ...newState, ...action.value };
       case SET_INTERVIEW: {
-        newState.appointments = action.value;
-        return newState;
+        const { id, interview } = action.value;
+        const appointment = {
+          ...state.appointments[id],
+          interview: { ...interview },
+        };
+
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment,
+        };
+        return { ...newState, appointments };
       }
       default:
         throw new Error(
@@ -34,30 +43,22 @@ export default function useApplicationData() {
   });
 
   function bookInterview(id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview },
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment,
-    };
-
     return axios
       .put(`/api/appointments/${id}`, { interview })
       .then((result) => {
-        dispatch({ type: SET_INTERVIEW, value: appointments });
-
-        updateSpots(-1);
-
+        // updateSpots(-1);
+        dispatch({ type: SET_INTERVIEW, value: { id, interview } });
         return;
       });
   }
 
   function deleteInterview(appointmentId) {
     return axios.delete(`/api/appointments/${appointmentId}`).then((data) => {
-      updateSpots(+1);
+      // updateSpots(+1);
+      dispatch({
+        type: SET_INTERVIEW,
+        value: { id: appointmentId, interview: null },
+      });
       return;
     });
   }
@@ -89,6 +90,30 @@ export default function useApplicationData() {
         },
       });
     });
+  }, []);
+
+  useEffect(() => {
+    const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+    webSocket.onopen = function (event) {
+      webSocket.send("ping");
+    };
+
+    webSocket.onmessage = function (event) {
+      var msg = JSON.parse(event.data);
+      if (msg.type !== SET_INTERVIEW) return;
+      const { id, interview } = msg;
+
+      // if (interview) updateSpots(+1);
+      // else updateSpots(-1);
+      console.log(state);
+
+      dispatch({ type: SET_INTERVIEW, value: { id, interview } });
+    };
+
+    return () => {
+      webSocket.close();
+    };
   }, []);
 
   return { state, bookInterview, deleteInterview, setDay };

@@ -94,8 +94,6 @@ export default function useApplicationData() {
       if (msg.type !== SET_INTERVIEW) return;
       const { id, interview } = msg;
 
-      console.log(msg);
-
       if (interview) updateSpots(id, -1);
       else updateSpots(id, +1);
 
@@ -104,7 +102,6 @@ export default function useApplicationData() {
 
     function updateSpots(interviewId, num) {
       const newState = { ...state };
-      console.log(newState);
       const dayIndex = newState.days.findIndex((day) =>
         day.appointments.includes(interviewId)
       );

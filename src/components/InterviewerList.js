@@ -32,6 +32,6 @@ export default function InterViewerList(props) {
 // Prop Validation
 InterViewerList.propTypes = {
   interviewers: PropTypes.array.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number,
   onChange: PropTypes.func.isRequired,
 };

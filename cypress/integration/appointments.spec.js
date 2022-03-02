@@ -1,13 +1,13 @@
-beforeEach(() => {
-  // Resetting test DB
-  cy.request("GET", "/api/debug/reset");
-  // Directing cypress to homepage
-  cy.visit("/");
-  // checking for page load
-  cy.contains("Monday");
-});
-
 describe("Appointmens", () => {
+  afterEach(() => cy.request("GET", "/api/debug/reset"));
+  beforeEach(() => {
+    // Resetting test DB
+    cy.request("GET", "/api/debug/reset");
+    // Directing cypress to homepage
+    cy.visit("/");
+    // checking for page load
+    cy.contains("Monday");
+  });
   it("should book an interview", () => {
     const studentName = "Ted Mosby";
     // Finding and clicking add interview button

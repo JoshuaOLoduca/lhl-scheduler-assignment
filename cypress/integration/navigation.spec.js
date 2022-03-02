@@ -1,8 +1,7 @@
-beforeEach(() => {
-  cy.visit("/");
-});
-
 describe("Navigation", () => {
+  beforeEach(() => {
+    cy.visit("/");
+  });
   it("should visit root", () => {});
 
   it("should navigate to tuesday", () => {

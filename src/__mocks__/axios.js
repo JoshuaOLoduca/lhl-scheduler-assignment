@@ -59,7 +59,7 @@ export default {
       return Promise.resolve({
         status: 200,
         statusText: "OK",
-        data: JSON.parse(JSON.stringify(fixtures.days)),
+        data: fixtures.days,
       });
     }
 
@@ -68,7 +68,7 @@ export default {
       return Promise.resolve({
         status: 200,
         statusText: "OK",
-        data: JSON.parse(JSON.stringify(fixtures.appointments)),
+        data: fixtures.appointments,
       });
     }
 
@@ -77,7 +77,7 @@ export default {
       return Promise.resolve({
         status: 200,
         statusText: "OK",
-        data: JSON.parse(JSON.stringify(fixtures.interviewers)),
+        data: fixtures.interviewers,
       });
     }
   }),

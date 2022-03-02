@@ -7,7 +7,7 @@ export default function useApplicationData() {
   const SET_INTERVIEW = "SET_INTERVIEW";
 
   function reducer(state, action) {
-    let newState = { ...state };
+    let newState = JSON.parse(JSON.stringify(state));
     switch (action.type) {
       case SET_DAY:
         newState.day = action.value;

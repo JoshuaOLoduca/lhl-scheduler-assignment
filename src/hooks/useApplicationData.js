@@ -4,6 +4,8 @@ import reducer, {
   SET_DAY,
   SET_APPLICATION_DATA,
   SET_INTERVIEW,
+  UPDATE_INTERVIEW,
+  DELETE_INTERVIEW_UPDATE,
 } from "reducers/application";
 
 export default function useApplicationData() {
@@ -13,6 +15,7 @@ export default function useApplicationData() {
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
     appointments: {},
     interviewers: {},
+    updates: {},
   });
 
   function bookInterview(id, interview) {
@@ -33,6 +36,13 @@ export default function useApplicationData() {
         value: { id: appointmentId, interview: null },
       });
       return;
+    });
+  }
+
+  function deleteInterviewUpdate(id) {
+    dispatch({
+      type: DELETE_INTERVIEW_UPDATE,
+      value: { id },
     });
   }
 
@@ -67,7 +77,7 @@ export default function useApplicationData() {
       if (msg.type !== SET_INTERVIEW) return;
 
       const { id, interview } = msg;
-      dispatch({ type: SET_INTERVIEW, value: { id, interview } });
+      dispatch({ type: UPDATE_INTERVIEW, value: { id, interview } });
     };
 
     return () => {
@@ -75,5 +85,11 @@ export default function useApplicationData() {
     };
   }, []);
 
-  return { state, bookInterview, deleteInterview, setDay };
+  return {
+    state,
+    bookInterview,
+    deleteInterview,
+    setDay,
+    deleteInterviewUpdate,
+  };
 }

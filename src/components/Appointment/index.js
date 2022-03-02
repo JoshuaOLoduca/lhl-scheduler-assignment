@@ -22,8 +22,15 @@ const ERROR_SAVING = "ERROR_SAVING";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
-  const { time, interview, bookInterview, deleteInterview, id, interviewers } =
-    props;
+  const {
+    time,
+    interview,
+    bookInterview,
+    deleteInterview,
+    id,
+    interviewers,
+    deleteUpdate,
+  } = props;
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -50,13 +57,17 @@ export default function Appointment(props) {
   }
 
   useEffect(() => {
-    if (interview && mode === EMPTY) {
+    if (interview && (mode === EMPTY || mode === CREATE)) {
       transition(SHOW);
     }
     if (interview === null && mode === SHOW) {
       transition(EMPTY);
     }
-  }, [interview, transition, mode]);
+    if (interview && interview.update) {
+      deleteUpdate();
+      transition(SHOW);
+    }
+  }, [interview, transition, mode, deleteUpdate]);
 
   return (
     <article className="appointment" data-testid="appointment">

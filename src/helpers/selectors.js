@@ -38,6 +38,7 @@ export function getInterview(state, appointment) {
 
   if (appointment && appointment.interviewer) {
     interview = {
+      ...appointment,
       student: appointment.student,
       interviewer: state.interviewers[appointment.interviewer],
     };

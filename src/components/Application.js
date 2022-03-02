@@ -11,8 +11,13 @@ import useApplicationData from "hooks/useApplicationData";
 import "components/Application.scss";
 
 export default function Application(props) {
-  const { state, setDay, bookInterview, deleteInterview } =
-    useApplicationData();
+  const {
+    state,
+    setDay,
+    bookInterview,
+    deleteInterview,
+    deleteInterviewUpdate,
+  } = useApplicationData();
 
   const interviewersForDay = getInterviewersForDay(state, state.day);
 
@@ -29,6 +34,7 @@ export default function Application(props) {
         bookInterview={bookInterview}
         deleteInterview={deleteInterview}
         interviewers={interviewersForDay}
+        deleteUpdate={() => deleteInterviewUpdate(appointment.id)}
       />
     );
   });

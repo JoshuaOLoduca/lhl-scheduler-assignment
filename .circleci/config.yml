@@ -18,22 +18,21 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
+  deploy:
+    machine:
+      enabled: true
 
-deploy:
-  machine:
-    enabled: true
+    working_directory: ~/client
 
-  working_directory: ~/client
-
-  steps:
-    - add_ssh_keys:
-        fingerprints:
-          - "ed:d1:04:25:13:7a:b1:ec:14:93:d8:53:83:06:13:33"
-    - checkout
-    - run:
-        name: Push Main to Production
-        command: |
-          git push https://github.com/JoshuaOLoduca/lhl-scheduler-assignment.git main:production
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "ed:d1:04:25:13:7a:b1:ec:14:93:d8:53:83:06:13:33"
+      - checkout
+      - run:
+          name: Push Main to Production
+          command: |
+            git push https://github.com/JoshuaOLoduca/lhl-scheduler-assignment.git main:production
 
 workflows:
   version: 2

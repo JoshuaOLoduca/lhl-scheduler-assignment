@@ -95,7 +95,7 @@ describe("Appointmens", () => {
     cy.get(".appointment__validation").should("not.to.match", ":empty");
   });
 
-  it.only("should show an error if no interviewer is selected", () => {
+  it("should show an error if no interviewer is selected", () => {
     const studentName = "Ted Mosby";
     // Finding and clicking add interview button
     cy.get("[alt=Add]").first().click();

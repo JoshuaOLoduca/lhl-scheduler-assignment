@@ -58,6 +58,8 @@ export default function useApplicationData() {
   }, []);
 
   useEffect(() => {
+    // If we are testing, dont bother with websocket listening
+    if (process.env.JEST_TESTING) return;
     const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
     webSocket.onmessage = function (event) {

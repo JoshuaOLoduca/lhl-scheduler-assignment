@@ -18,15 +18,10 @@ import {
 import Application from "components/Application";
 
 process.env = Object.assign(process.env, {
-  REACT_APP_WEBSOCKET_URL: "ws://localhost:8001",
+  JEST_TESTING: true,
 });
 
-// afterEach(cleanup);
-afterEach(() => {
-  cleanup();
-  jest.clearAllMocks();
-  jest.restoreAllMocks();
-});
+afterEach(cleanup);
 
 describe("Application", () => {
   it("defaults to Monday and changes the schedule when a new day is selected", () => {

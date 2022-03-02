@@ -80,7 +80,6 @@ describe("Appointmens", () => {
   });
 
   it("should show an error if no student name is given", () => {
-    const studentName = "Ted Mosby";
     // Finding and clicking add interview button
     cy.get("[alt=Add]").first().click();
 

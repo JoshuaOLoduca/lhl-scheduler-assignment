@@ -59,7 +59,7 @@ describe("Appointmens", () => {
     cy.contains("Tori Malcolm");
   });
 
-  it.only("should cancel an interview", () => {
+  it("should cancel an interview", () => {
     // Clicking the first Delete button
     cy.get("section.schedule").find("[alt=Delete]").click({ force: true });
 
@@ -77,5 +77,34 @@ describe("Appointmens", () => {
     // Checking to see if appointment was Deleted
     cy.should("not.contain", "Archie Cohen");
     cy.should("not.contain", "Sylvia Palmer");
+  });
+
+  it("should show an error if no student name is given", () => {
+    const studentName = "Ted Mosby";
+    // Finding and clicking add interview button
+    cy.get("[alt=Add]").first().click();
+
+    // Geting and selecting Interviewer
+    cy.get(".interviewers li").first().as("interviewer");
+    cy.get("@interviewer")
+      .click()
+      .should("have.class", "interviewers__item--selected");
+
+    // Checking for error
+    cy.get(".appointment__validation").should("match", ":empty");
+    cy.contains("Save").click();
+    cy.get(".appointment__validation").should("not.to.match", ":empty");
+  });
+
+  it.only("should show an error if no interviewer is selected", () => {
+    const studentName = "Ted Mosby";
+    // Finding and clicking add interview button
+    cy.get("[alt=Add]").first().click();
+    cy.get("[placeholder='Enter Student Name']").type(studentName);
+
+    // Checking for error
+    cy.get(".appointment__validation").should("match", ":empty");
+    cy.contains("Save").click();
+    cy.get(".appointment__validation").should("not.to.match", ":empty");
   });
 });

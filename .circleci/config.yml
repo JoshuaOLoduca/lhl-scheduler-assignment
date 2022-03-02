@@ -42,6 +42,7 @@ workflows:
           filters:
             branches:
               ignore: production
+              only: main
       - deploy:
           filters:
             branches:

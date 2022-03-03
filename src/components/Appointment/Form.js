@@ -4,8 +4,10 @@ import Button from "components/Button";
 import PropTypes from "prop-types";
 import "./styles.scss";
 
+const EDIT = "EDIT";
+
 export default function Form(props) {
-  const { interviewers, onSave, onCancel } = props;
+  const { interviewers, onSave, onCancel, mode } = props;
 
   // Setting up states
   const [student, setStudent] = useState(props.student || "");
@@ -78,7 +80,7 @@ export default function Form(props) {
           </Button>
           {/* Save Button */}
           <Button onClick={validate} confirm>
-            {student ? "Edit" : "Save"}
+            {mode === EDIT ? "Edit" : "Save"}
           </Button>
         </section>
       </section>

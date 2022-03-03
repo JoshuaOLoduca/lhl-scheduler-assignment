@@ -21,7 +21,7 @@ describe("Appointmens", () => {
       .should("have.class", "interviewers__item--selected");
 
     // Checking for save indicator
-    cy.contains("Edit").click();
+    cy.contains("Save").click();
     cy.get(".appointment__status-image").should(
       "have.attr",
       "src",
@@ -103,7 +103,7 @@ describe("Appointmens", () => {
 
     // Checking for error
     cy.get(".appointment__validation").should("match", ":empty");
-    cy.contains("Edit").click();
+    cy.contains("Save").click();
     cy.get(".appointment__validation").should("not.to.match", ":empty");
   });
 });

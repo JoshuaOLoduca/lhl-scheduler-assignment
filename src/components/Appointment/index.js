@@ -105,7 +105,12 @@ export default function Appointment(props) {
       {/* If we clicked add from empty state */}
       {/* Show create form */}
       {mode === CREATE && (
-        <Form interviewers={[...interviewers]} onCancel={back} onSave={save} />
+        <Form
+          interviewers={[...interviewers]}
+          onCancel={back}
+          onSave={save}
+          mode={CREATE}
+        />
       )}
 
       {/* Once we confirm an interview, show user saving circle */}
@@ -131,6 +136,7 @@ export default function Appointment(props) {
           interviewer={interview && interview.interviewer.id}
           onCancel={back}
           onSave={save}
+          mode={EDIT}
         />
       )}
 

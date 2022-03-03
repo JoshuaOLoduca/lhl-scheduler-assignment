@@ -48,7 +48,7 @@ describe("Application", () => {
     });
     fireEvent.click(getByAltText(appointment, "Cohana Roy"));
 
-    fireEvent.click(getByText(appointment, "Edit"));
+    fireEvent.click(getByText(appointment, "Save"));
 
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
@@ -147,7 +147,7 @@ describe("Application", () => {
       target: { value: "Lydia Miller-Jones" },
     });
     fireEvent.click(getByAltText(appointment, "Cohana Roy"));
-    fireEvent.click(getByText(appointment, "Edit"));
+    fireEvent.click(getByText(appointment, "Save"));
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
     await waitForElement(() => getByText(appointment, "Couldnt save details"));

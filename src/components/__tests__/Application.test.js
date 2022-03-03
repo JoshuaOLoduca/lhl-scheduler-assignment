@@ -114,9 +114,6 @@ describe("Application", () => {
       queryByText(day, "Monday")
     );
     // Test to see if spots is what the database provided
-    // //////////////////////
-    // IT IS NOT! :(
-    // //////////////////////
     expect(getByText(day, "1 spot remaining"));
 
     // Get all appointments and find specific one
@@ -147,18 +144,14 @@ describe("Application", () => {
     const appointment = getAllByTestId(container, "appointment")[1];
 
     fireEvent.click(getByAltText(appointment, "Add"));
-
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" },
     });
     fireEvent.click(getByAltText(appointment, "Cohana Roy"));
-
     fireEvent.click(getByText(appointment, "Edit"));
-
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
     await waitForElement(() => getByText(appointment, "Couldnt save details"));
-
     expect(getByText(appointment, "Couldnt save details")).toBeInTheDocument();
   });
 

@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import "./styles.scss";
 
 export default function Header(props) {
@@ -12,3 +12,7 @@ export default function Header(props) {
     </header>
   );
 }
+
+Header.propTypes = {
+  time: PropTypes.string,
+};

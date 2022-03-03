@@ -6,7 +6,6 @@ import {
   fireEvent,
   cleanup,
   waitForElement,
-  prettyDOM,
   getByText,
   getAllByTestId,
   getByAltText,
@@ -34,7 +33,7 @@ describe("Application", () => {
   });
 
   it("loads data, books an interview and reduces the spots remaining for the second day by 1", async () => {
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"));
 
     fireEvent.click(getByText(container, "Tuesday"));
@@ -49,7 +48,7 @@ describe("Application", () => {
     });
     fireEvent.click(getByAltText(appointment, "Cohana Roy"));
 
-    fireEvent.click(getByText(appointment, "Save"));
+    fireEvent.click(getByText(appointment, "Edit"));
 
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
@@ -66,7 +65,7 @@ describe("Application", () => {
 
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
     // Initialize app
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
 
     // Wait for mock axios to get data and update reducer
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -104,7 +103,7 @@ describe("Application", () => {
 
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
     // Initialize app
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
     // Wait for mock axios to get data and update reducer
     await waitForElement(() => getByText(container, "Archie Cohen"));
 
@@ -114,9 +113,6 @@ describe("Application", () => {
       queryByText(day, "Monday")
     );
     // Test to see if spots is what the database provided
-    // //////////////////////
-    // IT IS NOT! :(
-    // //////////////////////
     expect(getByText(day, "1 spot remaining"));
 
     // Get all appointments and find specific one
@@ -131,14 +127,14 @@ describe("Application", () => {
     fireEvent.change(getByDisplayValue(appointment, "Archie Cohen"), {
       target: { value: "Crchie Aohen" },
     });
-    fireEvent.click(getByText(appointment, "Save"));
+    fireEvent.click(getByText(appointment, "Edit"));
     await waitForElement(() => getByText(appointment, "Crchie Aohen"));
     expect(getByText(day, "1 spot remaining"));
   });
 
   it("shows the save error when failing to save an appointment", async () => {
     axios.put.mockRejectedValueOnce();
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"));
 
     fireEvent.click(getByText(container, "Tuesday"));
@@ -147,25 +143,21 @@ describe("Application", () => {
     const appointment = getAllByTestId(container, "appointment")[1];
 
     fireEvent.click(getByAltText(appointment, "Add"));
-
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" },
     });
     fireEvent.click(getByAltText(appointment, "Cohana Roy"));
-
-    fireEvent.click(getByText(appointment, "Save"));
-
+    fireEvent.click(getByText(appointment, "Edit"));
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
     await waitForElement(() => getByText(appointment, "Couldnt save details"));
-
     expect(getByText(appointment, "Couldnt save details")).toBeInTheDocument();
   });
 
   it("shows the delete error when failing to delete an existing appointment", async () => {
     axios.delete.mockRejectedValueOnce();
     // Initialize app
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
 
     // Wait for mock axios to get data and update reducer
     await waitForElement(() => getByText(container, "Archie Cohen"));

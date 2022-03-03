@@ -7,6 +7,7 @@ import "components/InterviewerList.scss";
 export default function InterViewerList(props) {
   const { interviewers, value, onChange } = props;
 
+  // Creating an array of listItems
   const intervListItems = interviewers.map((elm) => (
     <InterViewerListItem
       key={elm.id}
@@ -20,7 +21,10 @@ export default function InterViewerList(props) {
   return (
     <section className="interviewers">
       <h4 className="interviewers__header text--light">Interviewer</h4>
-      <ul className="interviewers__list">{intervListItems}</ul>
+      <ul className="interviewers__list">
+        {/* Inserting array into list */}
+        {intervListItems}
+      </ul>
     </section>
   );
 }
@@ -28,4 +32,6 @@ export default function InterViewerList(props) {
 // Prop Validation
 InterViewerList.propTypes = {
   interviewers: PropTypes.array.isRequired,
+  value: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
 };

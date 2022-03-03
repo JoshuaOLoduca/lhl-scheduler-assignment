@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import "./styles.scss";
 
 export default function Empty(props) {
@@ -7,6 +7,7 @@ export default function Empty(props) {
 
   return (
     <main className="appointment__add">
+      {/* Add Button */}
       <img
         className="appointment__add-button"
         src="images/add.png"
@@ -16,3 +17,7 @@ export default function Empty(props) {
     </main>
   );
 }
+
+Empty.propTypes = {
+  onAdd: PropTypes.func.isRequired,
+};

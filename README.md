@@ -58,7 +58,7 @@ A front end SPA react app for scheduling interviews
 
 ### Saving
 
-> ![Saving Status](/readmefiles/imgs/Saving.webm)
+> ![Saving Status](/readmefiles/imgs/Saving.gif)
 
 ---
 
@@ -88,7 +88,7 @@ A front end SPA react app for scheduling interviews
 
 ### Deleting Status
 
-> ![Deleting Status](/readmefiles/imgs/Deleting.webm)
+> ![Deleting Status](/readmefiles/imgs/Deleting.gif)
 
 ---
 
@@ -100,13 +100,13 @@ A front end SPA react app for scheduling interviews
 
 ### WebSockets Demo 1
 
-> ![WebSockets 1](/readmefiles/imgs/WebSockets1.webm)
+> ![WebSockets 1](/readmefiles/imgs/WebSockets1.gif)
 
 ---
 
-### WebSockets Demo 2
+### WebSockets Demo 2 (Shows spots being updated)
 
-> ![WebSockets 2](/readmefiles/imgs/WebSockets2.webm)
+> ![WebSockets 2](/readmefiles/imgs/WebSockets2.gif)
 
 ---
 

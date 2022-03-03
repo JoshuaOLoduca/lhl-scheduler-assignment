@@ -62,7 +62,7 @@ describe("Form", () => {
 
     fireEvent.click(getByAltText("Sylvia Palmer"));
 
-    fireEvent.click(getByText("Save"));
+    fireEvent.click(getByText("Edit"));
 
     expect(queryByText(/student name cannot be blank/i)).toBeNull();
 

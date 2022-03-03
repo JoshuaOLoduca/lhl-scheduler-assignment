@@ -49,7 +49,7 @@ describe("Application", () => {
     });
     fireEvent.click(getByAltText(appointment, "Cohana Roy"));
 
-    fireEvent.click(getByText(appointment, "Save"));
+    fireEvent.click(getByText(appointment, "Edit"));
 
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
@@ -131,7 +131,7 @@ describe("Application", () => {
     fireEvent.change(getByDisplayValue(appointment, "Archie Cohen"), {
       target: { value: "Crchie Aohen" },
     });
-    fireEvent.click(getByText(appointment, "Save"));
+    fireEvent.click(getByText(appointment, "Edit"));
     await waitForElement(() => getByText(appointment, "Crchie Aohen"));
     expect(getByText(day, "1 spot remaining"));
   });
@@ -153,7 +153,7 @@ describe("Application", () => {
     });
     fireEvent.click(getByAltText(appointment, "Cohana Roy"));
 
-    fireEvent.click(getByText(appointment, "Save"));
+    fireEvent.click(getByText(appointment, "Edit"));
 
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 

@@ -17,8 +17,12 @@ export default function useVisualMode(initial) {
   // Sets mode to latest history elm
   function back() {
     if (history.length === 0) return;
-    setMode(history.pop());
-    setHistory((prev) => [...prev]);
+    const latestHitsory = history[history.length - 1];
+    setMode(latestHitsory);
+    setHistory((prev) => {
+      prev.pop();
+      return [...prev];
+    });
   }
 
   return { mode, transition, back };

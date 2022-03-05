@@ -59,7 +59,7 @@ export default function Appointment(props) {
   // For deleting an interview
   function cancelInterview(appointmentId) {
     // Show deleting status
-    transition(DELETING);
+    transition(DELETING, true);
 
     // Delete interview from db and state
     deleteInterview(appointmentId)

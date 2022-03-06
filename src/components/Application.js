@@ -1,6 +1,7 @@
 import React from "react";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
+import Status from "./Appointment/Status";
 import {
   getAppointmentsForDay,
   getInterview,
@@ -68,7 +69,11 @@ export default function Application(props) {
       <section className="schedule">
         {/* Inserting array of appointments here */}
         {schedule}
-        <Appointment key="last" time="5pm" />
+        {state.fetchingData ? (
+          <Status message="Loading Data" />
+        ) : (
+          <Appointment key="last" time="5pm" />
+        )}
       </section>
     </main>
   );

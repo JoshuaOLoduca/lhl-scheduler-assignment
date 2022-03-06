@@ -10,6 +10,7 @@ import reducer, {
 
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(reducer, {
+    fetchingData: true,
     day: "Monday",
     days: [],
     appointments: {},

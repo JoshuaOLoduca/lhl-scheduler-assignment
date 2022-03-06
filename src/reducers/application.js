@@ -14,6 +14,7 @@ export default function reducer(state, action) {
       newState.day = action.value;
       return newState;
     case SET_APPLICATION_DATA:
+      delete newState.fetchingData;
       return { ...newState, ...action.value };
     // Attaching update bool to interview
     case UPDATE_INTERVIEW: {
